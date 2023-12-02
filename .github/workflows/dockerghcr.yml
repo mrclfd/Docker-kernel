@@ -1,0 +1,58 @@
+name: Ubuntu jammy-20211029 - Docker Build
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+      
+  schedule:
+    - cron: '0 0 * * *'
+    
+env:
+  IMAGE: 'ghcr.io/mrclfd/mega-sdk'
+
+jobs:
+  build:
+    name: Docker image Build
+    runs-on: ubuntu-jammy-20211029
+    # environment: Actions
+    steps:
+
+      - name: Check Out Repo
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Login to ghcr.io registry
+        run: 'docker login https://ghcr.io -u token -p ${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and Push image
+        run: >
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION
+          | sed -e 's/^v//')
+
+          echo VERSION=$VERSION
+
+          echo "Building"
+
+          docker build . -f ./docker_push -t ${{ env.IMAGE }}:$VERSION
+
+          [ "$VERSION" == "main" ] && docker tag ${{ env.IMAGE }}:$VERSION ${{
+          env.IMAGE }}:kernel
+
+          echo "Pushing"
+
+          docker push --all-tags ${{ env.IMAGE }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
