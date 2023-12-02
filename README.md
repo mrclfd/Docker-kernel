@@ -2,7 +2,7 @@
 
 [![Docker Build Status](https://github.com/mrclfd/Kernel-Docker/actions/workflows/dockerghcr.yml/badge.svg)](https://github.com/mrclfd/Kernel-Docker/actions/workflows/dockerghcr.yml)
 
-A [Docker Image](https://github.com/mrclfd?tab=packages&repo_name=Docker-kernel) for [Kernel Compile](https://github.com/mrclfd/cooking-kernel).
+A [Docker Image](https://github.com/mrclfd?tab=packages&repo_name=Kernel-Docker) for [Kernel Compile](https://github.com/mrclfd/cooking-kernel).
 
 ## How to use? 
 ```
