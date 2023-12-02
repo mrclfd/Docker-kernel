@@ -1,4 +1,4 @@
-name: Ubuntu jammy-20211029 - Docker Build
+name: Ubuntu 22.04 - Docker Build
 
 on: 
   workflow_dispatch:
@@ -8,24 +8,24 @@ on:
     tags:
       - v*
       
-  schedule:
-    - cron: '0 0 * * *'
+ # schedule:
+ #   - cron: '0 0 * * *'
     
 env:
-  IMAGE: 'ghcr.io/mrclfd/mega-sdk'
+  IMAGE: 'ghcr.io/mrclfd/kernel'
 
 jobs:
   build:
     name: Docker image Build
-    runs-on: ubuntu-jammy-20211029
+    runs-on: ubuntu-latest
     environment: Actions
     steps:
 
       - name: Check Out Repo
         uses: actions/checkout@v2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+      #- name: Set up QEMU
+      #  uses: docker/setup-qemu-action@v2
 
       - name: Login to ghcr.io registry
         run: 'docker login https://ghcr.io -u token -p ${{ secrets.GITHUB_TOKEN }}'
