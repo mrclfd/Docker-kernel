@@ -24,8 +24,8 @@ jobs:
       - name: Check Out Repo
         uses: actions/checkout@v2
 
-      #- name: Set up QEMU
-      #  uses: docker/setup-qemu-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
       - name: Login to ghcr.io registry
         run: 'docker login https://ghcr.io -u token -p ${{ secrets.GITHUB_TOKEN }}'
@@ -48,7 +48,7 @@ jobs:
           docker build . -f ./docker_push -t ${{ env.IMAGE }}:$VERSION
 
           [ "$VERSION" == "main" ] && docker tag ${{ env.IMAGE }}:$VERSION ${{
-          env.IMAGE }}:kernel
+          env.IMAGE }}:build
 
           echo "Pushing"
 
