@@ -1,4 +1,4 @@
-name: Ubuntu 22.04 - Docker Build
+name: Ubuntu jammy-20211029 - Docker Build
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-jammy-20211029
     environment: Actions
     steps:
 
